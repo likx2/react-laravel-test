@@ -8,14 +8,16 @@ class User extends \Illuminate\Database\Eloquent\Model
     const FIRST_NAME_COLUMN = 'firstName';
     const LAST_NAME_COLUMN = 'lastName';
 
-    const POSTS_RELATION = 'posts';
     const TABLE_NAME = 'users';
+    const POSTS_RELATION = 'posts';
 
     protected $table = self::TABLE_NAME;
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
-        $this->hasMany(Post::class, Post::AUTHOR_ID, self::ID_COLUMN);
+       return $this->hasMany(Post::class, Post::AUTHOR_ID, self::ID_COLUMN);
     }
-
 }

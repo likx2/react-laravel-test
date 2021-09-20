@@ -21,5 +21,6 @@ use \Illuminate\Support\Facades\Route;
 //Route::get('hello', 'HelloController@show');
 
 Route::post('posts', 'PostController@store');
-//Route::get('posts', 'PostController@show');
+Route::get('posts/{authorId}', 'PostController@index');
+Route::patch('posts/{postId}', 'PostController@update');
 

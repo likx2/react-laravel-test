@@ -27,7 +27,7 @@ class AddForeignKeyToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            //
+       $table->dropColumn(Post::AUTHOR_ID);
         });
     }
 }

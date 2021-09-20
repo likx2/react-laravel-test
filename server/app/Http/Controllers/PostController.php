@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Validation\PostValidation;
 use App\Models\Post;
+use App\Models\User;
+use App\Resources\PostResourceCollection;
 use App\Resources\PostResourse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 
 class PostController extends \Illuminate\Routing\Controller
 {
     use PostValidation;
+
+    /**
+     * @param Request $request
+     * @return PostResourse
+     * @throws \Exception
+     */
     public function store(Request $request)
     {
         $this->validateAuthorId($request->{Post::AUTHOR_ID});
@@ -23,7 +32,35 @@ class PostController extends \Illuminate\Routing\Controller
 
         return new PostResourse($post);
     }
-    //add validation (post must be with existed user in db)
-    // get all posts by author
-    //patch existed post
+
+    /**
+     * @param $authorId
+     * @return PostResourceCollection
+     */
+    public function index($authorId)
+    {
+        $this->validateAuthorId($authorId);
+        $retrievedPostsByAythor = Post::query()
+            ->where(Post::AUTHOR_ID, $authorId)
+            ->with(Post::AUTHOR_RELATION)
+            ->get();
+
+        return new PostResourceCollection($retrievedPostsByAythor);
+    }
+
+    /**
+     * @param Request $request
+     * @param $postId
+     * @return PostResourse
+     */
+    public function update(Request $request, $postId)
+    {
+        $this->validateContentOfPost($request);
+        $postToBeUpdated = Post::findOrFail($postId);
+        $postToBeUpdated->{Post::TITLE_COLUMN} = $request->get(Post::TITLE_COLUMN);
+        $postToBeUpdated->{Post::CONTENT_COLUMN} = $request->get(Post::CONTENT_COLUMN);
+        $postToBeUpdated->save();
+
+        return new PostResourse($postToBeUpdated);
+    }
 }

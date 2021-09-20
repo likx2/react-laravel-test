@@ -1,14 +1,22 @@
-import React, {Component, useEffect, useState} from 'react';
-import axios from "axios";
-import Form from "./components/Form/Form";
+import React, {Component} from 'react';
+import Form from './components/Form';
 import Main from './components/Main'
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import PostList from "./components/PostList";
 
 class App extends Component<any, any> {
     render() {
         return (
-            <Main>
-                <Form/>
-            </Main>)
+            <Router>
+                <Switch>
+                    <Main>
+                        <Route exact path={'/'} component={Form}/>
+                        <Route path={'/posts/getByAuthor/:authorId'} component={PostList}/>
+                        <Route path={'/posts/update/:id'} component={Form}/>
+                    </Main>
+                </Switch>
+
+            </Router>)
     }
 }
 

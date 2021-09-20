@@ -11,14 +11,50 @@ class Post extends \Illuminate\Database\Eloquent\Model
     const UPDATED_AT = 'updated_at';
     const AUTHOR_ID = 'author_id';
 
-    const AUTHOR_RELATIONS = 'users';
     const TABLE_NAME = 'posts';
+    const AUTHOR_RELATION = 'author';
 
     protected $table = self::TABLE_NAME;
 
+//Getters
+
+    public function getId()
+    {
+        return $this->getKey();
+    }
+
+    public function getTitle()
+    {
+        return $this->getAttribute(self::TITLE_COLUMN);
+    }
+
+    public function getContent()
+    {
+        return $this->getAttribute(self::CONTENT_COLUMN);
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->getAttribute(self::CREATED_AT);
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->getAttribute(self::UPDATED_AT);
+    }
+
+    public function getAuthorId()
+    {
+        return $this->getAttribute(self::AUTHOR_ID);
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function author()
     {
-        $this->belongsTo(User::class,self::AUTHOR_ID,User::ID_COLUMN);
+        return $this->belongsTo(User::class, self::AUTHOR_ID, User::ID_COLUMN);
     }
 }
 

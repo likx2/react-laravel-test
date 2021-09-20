@@ -8,13 +8,13 @@ import {styles} from "./Form.style";
 interface FormLocalState {
     title: string,
     content: string,
-    author_id:number
+    author_id: number
 }
 
 const initialState: FormLocalState = {
     title: '',
     content: '',
-    author_id:1
+    author_id: 1
 }
 
 class Form extends Component<any, FormLocalState> {
@@ -27,8 +27,13 @@ class Form extends Component<any, FormLocalState> {
         this.submitHandler = async (e: FormEvent<HTMLFormElement>) => {
             e.preventDefault()
             try {
-                const response = await axios.post(`${process.env.REACT_APP_API_URL}/posts`, this.state)
-                console.log(response.data)
+                if (this.props.match.params.id) {
+                    const response = await axios.patch(`${process.env.REACT_APP_API_URL}/posts/${this.props.match.params.id}`, this.state)
+                    console.log(response.data)
+                } else {
+                    const response = await axios.post(`${process.env.REACT_APP_API_URL}/posts`, this.state)
+                    console.log(response.data)
+                }
             } catch (e) {
                 throw e;
             } finally {
