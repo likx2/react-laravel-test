@@ -42,7 +42,10 @@ class PostController extends \Illuminate\Routing\Controller
         $this->validateAuthorId($authorId);
         $retrievedPostsByAythor = Post::query()
             ->where(Post::AUTHOR_ID, $authorId)
-            ->with(Post::AUTHOR_RELATION)
+            ->with([Post::AUTHOR_RELATION =>
+                function ($authorQuery) {
+                    $authorQuery->where(User::FIRST_NAME_COLUMN, '=', 'Ahmed');
+                }])
             ->get();
 
         return new PostResourceCollection($retrievedPostsByAythor);

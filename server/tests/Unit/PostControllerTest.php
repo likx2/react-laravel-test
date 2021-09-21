@@ -1,17 +1,17 @@
 <?php
 
 use App\Models\Post;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class PostControllerTest extends TestCase
 {
     /** @test */
-    public function can_show_return_posts_by_specific_athor_id()
+    public function can_index_return_posts_by_existed_athor_id()
     {
         $posts = factory(Post::class, 3)->create([
             Post::AUTHOR_ID => 1
         ]);
-
-
+        $response = $this->get('/posts/1');
+        dd($response);
     }
 }
