@@ -20,6 +20,7 @@ use \App\Models\User;
 $factory->define(User::class, function (Faker $faker) {
     return [
         User::FIRST_NAME_COLUMN => $faker->firstName,
-        User::LAST_NAME_COLUMN => $faker->lastName
+        User::LAST_NAME_COLUMN => $faker->lastName,
+        User::COUNTRY_ID=>$faker->numberBetween(1,10),
     ];
 });

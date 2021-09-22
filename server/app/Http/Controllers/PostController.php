@@ -44,7 +44,7 @@ class PostController extends \Illuminate\Routing\Controller
             ->where(Post::AUTHOR_ID, $authorId)
             ->with([Post::AUTHOR_RELATION =>
                 function ($authorQuery) {
-                    $authorQuery->where(User::FIRST_NAME_COLUMN, '=', 'Ahmed');
+                    $authorQuery->where(User::COUNTRY_ID, '=', 0);
                 }])
             ->get();
 

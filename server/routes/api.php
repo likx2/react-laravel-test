@@ -22,5 +22,6 @@ use \Illuminate\Support\Facades\Route;
 
 Route::post('posts', 'PostController@store');
 Route::get('posts/{authorId}', 'PostController@index');
+//Route::get('posts', 'PostController@getPostsWithAuthorRelationCreatedMoreThan2DaysAgo');
 Route::patch('posts/{postId}', 'PostController@update');
 
